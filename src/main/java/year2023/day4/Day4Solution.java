@@ -4,7 +4,6 @@ import common.Utils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @see <a href="https://adventofcode.com/2023/day/4">Day 4</a>
@@ -16,44 +15,69 @@ public class Day4Solution {
 
     public static void main(String[] args) {
 
+        // general
         List<String> input = Utils.readInputFromResources(inputFile);
-
-        int sum = input.stream()
+        Card [] cards = input.stream()
                 .map(Card::new)
-                .mapToInt(Card::calculateWinningPoints)
+                .toArray(Card[]::new);
+
+        // first
+        int sum = Arrays.stream(cards)
+                    .mapToInt(Card::calculateWinningPoints)
+                    .sum();
+
+        System.out.println(sum);
+
+        // second
+        int [] cardsMultiplier = new int[input.size()];
+        Arrays.fill(cardsMultiplier, 1);
+        for (int i = 0; i < input.size(); i ++) {
+            int currentMultiplier = cardsMultiplier[i];
+            int matchingNumbers   = cards[i].getMatchingNumbers();
+
+            for (int nTimes = 0; nTimes < currentMultiplier; nTimes ++) {
+                for (int j = 0; j < matchingNumbers && i + j + 1 <= cardsMultiplier.length; j ++) {
+                    cardsMultiplier[i + j + 1] += 1;
+                }
+            }
+        }
+
+        sum = Arrays.stream(cardsMultiplier)
                 .sum();
 
         System.out.println(sum);
     }
 
+
     private static class Card {
 
-        List<Integer> winningNumbers;
-        List<Integer> actualNumbers;
+        private final int matchingNumbers;
 
         private Card(String input) {
             String[] numbers = input.split(":")[1].split("\\|");
 
-            winningNumbers = Arrays.stream(numbers[0].split(" "))
+            final List<Integer> winningNumbers = Arrays.stream(numbers[0].split(" "))
                     .filter(s -> ! s.isBlank())
                     .map(Integer::parseInt)
-                    .collect(Collectors.toList());
+                    .toList();
 
-            actualNumbers = Arrays.stream(numbers[1].split(" "))
+            final List<Integer> actualNumbers = Arrays.stream(numbers[1].split(" "))
                     .filter(s -> ! s.isBlank() )
                     .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-        }
+                    .toList();
 
-        private int calculateWinningPoints() {
-            long countWinningNumbers = actualNumbers.stream()
+            matchingNumbers = (int) actualNumbers.stream()
                     .filter(winningNumbers::contains)
                     .count();
-
-            if (countWinningNumbers == 0) return 0;
-            return (int) Math.pow(2, countWinningNumbers-1);
         }
 
+        private int getMatchingNumbers() { return matchingNumbers; }
+
+        private int calculateWinningPoints() {
+            return matchingNumbers == 0 ? 0 :
+                   (int) Math.pow(2, matchingNumbers-1);
+        }
     }
+
 
 }
