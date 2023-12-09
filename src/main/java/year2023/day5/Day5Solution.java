@@ -25,14 +25,29 @@ public class Day5Solution {
                 .map(Long::parseLong)
                 .toList();
 
-        // first
         PermutationSet set = createPermutationSet(input.subList(1, input.size()));
+
+        // first
         long nearestLocation = seeds.stream()
                 .map(set::resolve)
                 .min(Long::compareTo)
                 .orElse(0L);
 
         System.out.println(nearestLocation);
+
+        // second
+        long min = Long.MAX_VALUE;
+        for (int i = 0; i < seeds.size(); i += 2) {
+            long start = seeds.get(i);
+            long size  = seeds.get(i+1);
+            for (int j = 0; j < size; j++) {
+                long resolved = set.resolve(start + j);
+                if (resolved < min) {
+                    min = resolved;
+                }
+            }
+        }
+        System.out.println(min);
     }
 
     private static PermutationSet createPermutationSet(List<String> lines) {
@@ -47,7 +62,6 @@ public class Day5Solution {
         }
         return set;
     }
-
 
     private static class PermutationSet {
 
