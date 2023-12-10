@@ -73,5 +73,18 @@ public class Utils {
                 .toList();
     }
 
+    public static char[][] as2dArray(List<String> input) {
+        if (input.isEmpty()) { return new char[0][0]; }
+
+        int height = input.size();
+        int width  = input.get(0).length();
+
+        char [][] array = new char[height][width];
+        for (int i = 0; i < input.size(); i++) {
+            array[i] = input.get(i).toCharArray();
+        }
+        return array;
+    }
+
 
 }

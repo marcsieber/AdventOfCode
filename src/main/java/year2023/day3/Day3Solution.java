@@ -32,7 +32,7 @@ public class Day3Solution {
 
         // general
         List<String> input = Utils.readInputFromResources(inputFile);
-        char[][] array = as2dArray(input);
+        char[][] array = Utils.as2dArray(input);
 
         // first
         List<Point>       points                 = symbolPositions(array, false);
@@ -57,19 +57,6 @@ public class Day3Solution {
             sum += a * b;
         }
         System.out.println(sum);
-    }
-
-    private static char[][] as2dArray(List<String> input) {
-        if (input.isEmpty()) { return new char[0][0]; }
-
-        int height = input.size();
-        int width  = input.get(0).length();
-
-        char [][] array = new char[height][width];
-        for (int i = 0; i < input.size(); i++) {
-            array[i] = input.get(i).toCharArray();
-        }
-        return array;
     }
 
     private static List<Point> symbolPositions(char[][] array, boolean gearsOnly) {
