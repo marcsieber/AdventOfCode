@@ -1,5 +1,6 @@
 package common;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,5 +87,26 @@ public class Utils {
         return array;
     }
 
+    public static char[][] arrayCopy(char[][] that) {
+        if (that.length == 0) { return new char[0][0]; }
+
+        char[][] copy = new char[that.length][that[0].length];
+        for (int y = 0; y < that.length; y++) {
+            System.arraycopy(that[y], 0, copy[y], 0, that[y].length);
+        }
+        return copy;
+    }
+
+    public static void replaceCharacters(char [][] array2d, List<Point> coordinates, char newChar) {
+        for (Point coords : coordinates) {
+            array2d[coords.y][coords.x] = newChar;
+        }
+    }
+
+    public static void print2dArray(char [][] array2d) {
+        for (char[] chars : array2d) {
+            System.out.println(new String(chars));
+        }
+    }
 
 }
