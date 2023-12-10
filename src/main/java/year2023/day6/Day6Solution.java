@@ -3,7 +3,6 @@ package year2023.day6;
 import common.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,8 +12,6 @@ public class Day6Solution {
 
 //  private static final String inputFile = "day6-dummy.txt";
     private static final String inputFile = "day6.txt";
-
-    private static final boolean debug = false;
 
     public static void main(String[] args) {
 
@@ -57,21 +54,14 @@ public class Day6Solution {
         return concatenated;
     }
 
-    private static class Race {
-        private final long time;
-        private final long distance;
-
-        private Race(long time, long distance) {
-            this.time = time;
-            this.distance = distance;
-        }
+    private record Race(long time, long distance) {
 
         private long countWinningOptions() {
             int count = 0;
-            for (int t = 1; t <= time; t ++) {
+            for (int t = 1; t <= time; t++) {
                 long distance = t * (time - t); // speed = 1 * t
                 if (this.distance < distance) {
-                    count ++;
+                    count++;
                 }
             }
             return count;

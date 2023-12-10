@@ -43,8 +43,8 @@ public class Day2Solution {
     private static class Game {
         private static final Pattern gameIdRegex = Pattern.compile("Game (\\d*)");
 
-        int gameId;
-        List<GameSet> sets;
+        final int gameId;
+        final List<GameSet> sets;
 
         private Game(String line) {
             gameId = regexFindNumber(gameIdRegex, line);
@@ -77,9 +77,9 @@ public class Day2Solution {
         private static final Pattern greenRegex = Pattern.compile("(\\d*) green");
         private static final Pattern blueRegex  = Pattern.compile("(\\d*) blue");
 
-        int red;
-        int green;
-        int blue;
+        private final int red;
+        private final int green;
+        private final int blue;
 
         private GameSet(String line) {
             this(

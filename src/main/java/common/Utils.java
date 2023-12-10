@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Utils {
 
@@ -14,7 +15,7 @@ public class Utils {
         List<String> lines = new ArrayList<>();
 
         try (InputStream is = Utils.class.getClassLoader().getResourceAsStream(fileName)) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is)));
 
             String line;
             while((line = br.readLine()) != null) {
