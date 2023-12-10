@@ -66,5 +66,12 @@ public class Utils {
                 .toList();
     }
 
+    public static List<Long> readAsListOfLong(String input) {
+        return Arrays.stream(input.split(" "))
+                .filter(s -> ! s.isBlank())
+                .map(Long::parseLong)
+                .toList();
+    }
+
 
 }
