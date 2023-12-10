@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
@@ -55,6 +56,13 @@ public class Utils {
             }
         }
         return biggestIdx;
+    }
+
+    public static List<Integer> readAsListOfInt(String input) {
+        return Arrays.stream(input.split(" "))
+                .filter(s -> ! s.isBlank())
+                .map(Integer::parseInt)
+                .toList();
     }
 
 
