@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Day1Solution {
 
-//  private static final String inputFile = "day1-dummy.txt";
+//  private static final String inputFile = "day1-example.txt";
     private static final String inputFile = "day1.txt";
 
     private static final List<String> numbers = List.of(

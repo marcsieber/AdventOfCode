@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class Day3Solution {
 
-//  private static final String inputFile = "day3-dummy.txt";
+//  private static final String inputFile = "day3-example.txt";
     private static final String inputFile = "day3.txt";
 
     private static final char placeholder = '.';

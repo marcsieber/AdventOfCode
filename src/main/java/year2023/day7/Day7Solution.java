@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Day7Solution {
 
-//  private static final String inputFile = "day7-dummy.txt";
+//  private static final String inputFile = "day7-example.txt";
     private static final String inputFile = "day7.txt";
 
     public static void main(String[] args) {

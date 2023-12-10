@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Day6Solution {
 
-//  private static final String inputFile = "day6-dummy.txt";
+//  private static final String inputFile = "day6-example.txt";
     private static final String inputFile = "day6.txt";
 
     public static void main(String[] args) {
