@@ -97,12 +97,37 @@ public class Utils {
         return copy;
     }
 
+    public static char[][] insertColumnAtPos(char[][] array, int pos, char defaultValue) {
+        if (pos < 0 || pos > array.length) { throw new ArrayIndexOutOfBoundsException(pos); }
+        char[][] copy = new char[array.length][];
+        for (int y = 0; y < array.length; y++) {
+            char[] newRow = new char[array[y].length + 1];
+            newRow[pos] = defaultValue;
+            System.arraycopy(array[y], 0, newRow, 0, pos);
+            System.arraycopy(array[y], pos, newRow, pos + 1, array[y].length - pos);
+            copy[y] = newRow;
+        }
+        return copy;
+    }
+
+    public static char[][] insertRowAtPos(char[][] array, int pos, char defaultValue) {
+        if (pos < 0 || pos > array.length) { throw new ArrayIndexOutOfBoundsException(pos); }
+
+        char[][] copy = new char[array.length + 1][array[0].length];
+        System.arraycopy(array, 0, copy, 0, pos);
+        System.arraycopy(array, pos,      copy, pos + 1, array.length - pos);
+        Arrays.fill(copy[pos], defaultValue);
+        return copy;
+    }
+
+
     public static void replaceCharacters(char [][] array2d, List<Point> coordinates, char newChar) {
         for (Point coords : coordinates) {
             array2d[coords.y][coords.x] = newChar;
         }
     }
 
+    @SuppressWarnings("unused")
     public static void print2dArray(char [][] array2d) {
         for (char[] chars : array2d) {
             System.out.println(new String(chars));
