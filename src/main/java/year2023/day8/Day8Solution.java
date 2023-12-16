@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * @see <a href="https://adventofcode.com/2023/day/8">Day 8</a>
  */
+@SuppressWarnings("CommentedOutCode")
 public class Day8Solution {
 
 //  private static final String inputFile = "2023/provided/day8-example1.txt";

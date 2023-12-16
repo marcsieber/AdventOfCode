@@ -56,6 +56,7 @@ public class Day2Solution {
 
         public int getGameId() { return gameId; }
 
+        @SuppressWarnings("SameParameterValue")
         private boolean isPossible(GameSet gameSet) {
             return sets.stream().allMatch(set -> set.isPossibleOutcome(gameSet));
         }
