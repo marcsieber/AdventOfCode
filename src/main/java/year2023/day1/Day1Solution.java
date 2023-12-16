@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class Day1Solution {
 
-//  private static final String inputFile = "day1-example.txt";
-    private static final String inputFile = "day1.txt";
+//  private static final String inputFile = "2023/provided/day1-example.txt";
+    private static final String inputFile = "2023/provided/day1.txt";
 
     private static final List<String> numbers = List.of(
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"

@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
  */
 public class Day2Solution {
 
-//  private static final String inputFile = "day2-example.txt";
-    private static final String inputFile = "day2.txt";
+//  private static final String inputFile = "2023/provided/day2-example.txt";
+    private static final String inputFile = "2023/provided/day2.txt";
 
     private static final GameSet target = new GameSet(12, 13, 14);
 

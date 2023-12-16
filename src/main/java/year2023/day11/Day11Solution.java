@@ -13,8 +13,8 @@ import java.util.stream.IntStream;
  */
 public class Day11Solution {
 
-//    private static final String inputFile = "day11-example.txt";
-    private static final String inputFile = "day11.txt";
+//    private static final String inputFile = "2023/provided/day11-example.txt";
+    private static final String inputFile = "2023/provided/day11.txt";
 
     private static final char galaxy  = '#';
     private static final char empty   = '.';

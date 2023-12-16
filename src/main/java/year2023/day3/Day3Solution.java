@@ -21,8 +21,8 @@ import java.util.Set;
  */
 public class Day3Solution {
 
-//  private static final String inputFile = "day3-example.txt";
-    private static final String inputFile = "day3.txt";
+//  private static final String inputFile = "2023/provided/day3-example.txt";
+    private static final String inputFile = "2023/provided/day3.txt";
 
     private static final char placeholder = '.';
     private static final char gear = '*';

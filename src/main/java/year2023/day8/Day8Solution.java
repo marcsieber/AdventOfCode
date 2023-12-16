@@ -11,9 +11,10 @@ import java.util.Map;
  */
 public class Day8Solution {
 
-//  private static final String inputFile = "day8-example1.txt";
-//  private static final String inputFile = "day8-example2.txt";
-    private static final String inputFile = "day8.txt";
+//  private static final String inputFile = "2023/provided/day8-example1.txt";
+//  private static final String inputFile = "2023/provided/day8-example2.txt";
+//  private static final String inputFile = "2023/provided/day8-example3.txt";
+    private static final String inputFile = "2023/provided/day8.txt";
 
     public static void main(String[] args) {
 

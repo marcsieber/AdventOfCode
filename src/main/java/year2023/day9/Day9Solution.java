@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Day9Solution {
 
-//  private static final String inputFile = "day9-example.txt";
-    private static final String inputFile = "day9.txt";
+//  private static final String inputFile = "2023/provided/day9-example.txt";
+    private static final String inputFile = "2023/provided/day9.txt";
 
     public static void main(String[] args) {
 

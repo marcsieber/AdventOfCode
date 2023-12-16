@@ -18,12 +18,12 @@ import java.util.List;
 @SuppressWarnings("CommentedOutCode")
 public class Day10Solution {
 
-//  private static final String inputFile = "day10-example1.txt";
-//  private static final String inputFile = "day10-example2.txt";
-//  private static final String inputFile = "day10-example3.txt";
-//  private static final String inputFile = "day10-example4.txt";
-//  private static final String inputFile = "day10-example5.txt";
-    private static final String inputFile = "day10.txt";
+//  private static final String inputFile = "2023/provided/day10-example1.txt";
+//  private static final String inputFile = "2023/provided/day10-example2.txt";
+//  private static final String inputFile = "2023/provided/day10-example3.txt";
+//  private static final String inputFile = "2023/provided/day10-example4.txt";
+//  private static final String inputFile = "2023/provided/day10-example5.txt";
+    private static final String inputFile = "2023/provided/day10.txt";
 
     private static final char start       = 'S';
     private static final char generalPipe = '*';

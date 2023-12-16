@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class Day5Solution {
 
-//  private static final String inputFile = "day5-example.txt";
-    private static final String inputFile = "day5.txt";
+//  private static final String inputFile = "2023/provided/day5-example.txt";
+    private static final String inputFile = "2023/provided/day5.txt";
 
     private static final boolean debug = false;
 
