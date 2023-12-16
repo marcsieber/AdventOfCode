@@ -22,19 +22,30 @@ public class Day11Solution {
     public static void main(String[] args) {
 
         // general
-        List<String> input        = Utils.readInputFromResources(inputFile);
-        char[][] starMap          = Utils.as2dArray(input);
+        List<String> input            = Utils.readInputFromResources(inputFile);
+        char[][] starMap              = Utils.as2dArray(input);
+        List<Point> galaxyCoordinates = findGalaxies(starMap);
 
         // first
-        List<Integer> expansionColumns = findColumnsToExpand(starMap);
-        List<Integer> expansionRows    = findRowsToExpand(starMap);
+        List<Expansion> expansions = new ArrayList<>(findColumnsToExpand(starMap).stream()
+                .map(i -> new Expansion(i, true, 2)) // double row count
+                .toList());
 
-        starMap = fillEmptySpace(starMap, expansionColumns, expansionRows);
-        List<Point> galaxyCoordinates = findGalaxies(starMap);
-        System.out.println(calculateDistances(galaxyCoordinates));
+        expansions.addAll(findRowsToExpand(starMap).stream()
+                .map(i -> new Expansion(i, false, 2))  // double column count
+                .toList());
+
+        System.out.println(calculateDistances(expansions, galaxyCoordinates));
 
         // second
+        expansions = expansions.stream ()
+                .map(e -> new Expansion(e.index, e.row, 1000000))
+                .toList();
+
+        System.out.println(calculateDistances(expansions, galaxyCoordinates));
     }
+
+    private record Expansion(int index, boolean row, int expansion) { }
 
     private static List<Integer> findRowsToExpand(char[][] array2d) {
         return IntStream.range(0, array2d.length)
@@ -50,19 +61,6 @@ public class Day11Solution {
                 .collect(Collectors.toList());
     }
 
-    private static char [][] fillEmptySpace(char[][] array2d, List<Integer> expansionColumns, List<Integer> expansionRows) {
-        char [][] copy = array2d;
-        int idx = 0;
-        for (int row : expansionRows) {
-            copy = Utils.insertRowAtPos(copy, row - idx-- , empty);
-        }
-        idx = 0;
-        for (int column : expansionColumns) {
-            copy = Utils.insertColumnAtPos(copy, column - idx--, empty);
-        }
-        return copy;
-    }
-
     private static List<Point> findGalaxies(char[][] array2d) {
         List<Point> coordinates = new ArrayList<>();
         for (int y = 0; y < array2d.length; y ++) {
@@ -75,16 +73,39 @@ public class Day11Solution {
         return coordinates;
     }
 
-    private static int calculateDistances(List<Point> points) {
-        int totalDistance = 0;
+    private static long calculateDistances(List<Expansion> expansions, List<Point> points) {
+        long totalDistance = 0;
         for (int i = 0; i < points.size() - 1; i++) {
             Point p1 = points.get(i);
             for (int j = i + 1; j < points.size(); j++) {
                 Point p2 = points.get(j);
-                totalDistance += Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y);
+
+                long expandX = calculateDistanceWithExpansion(expansions, p1, p2, true);
+                long expandY = calculateDistanceWithExpansion(expansions, p1, p2, false);
+                totalDistance +=  expandX + expandY ;
             }
         }
         return totalDistance;
+    }
+
+    private static long calculateDistanceWithExpansion(List<Expansion> expansions, Point from, Point to, boolean row) {
+        expansions = expansions.stream()
+                .filter( e -> e.row && row || ( ! row && ! e.row))
+                .toList();
+
+        int coordinateFrom = row ? from.x : from.y;
+        int coordinateTo   = row ? to.x   : to.y;
+        int step           = (int) Math.signum( coordinateTo - coordinateFrom);
+
+        long expansion = 0;
+        for (int i = coordinateFrom +step; i != (step + coordinateTo); i += step) {
+            final int idx = i;
+            int expandBy = expansions.stream()
+                    .filter(e -> e.index == idx)
+                    .mapToInt(Expansion::expansion).findFirst().orElse(1);
+            expansion += expandBy;
+        }
+        return expansion;
     }
 
 }
