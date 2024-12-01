@@ -1,4 +1,4 @@
-package year2024.day1;
+package year2024.day01;
 
 import common.Utils;
 
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * @see <a href="http://adventofcode.com/2024/day/1#part2">Day 01</a>
+ * @see <a href="http://adventofcode.com/2024/day/1">Day 01</a>
  */
 public class Day01Solution {
 
