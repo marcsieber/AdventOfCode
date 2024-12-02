@@ -42,7 +42,7 @@ public class Day02Solution {
 
             } else {
                 for (List<Integer> subReport : listVariationsWithOneRemoved(report)) {
-                    if ( isStrictlyMonotone(subReport) && isValidDelta(subReport)) {
+                    if (isStrictlyMonotone(subReport) && isValidDelta(subReport)) {
                         counter++;
                         break;
                     }
@@ -76,12 +76,12 @@ public class Day02Solution {
         return true;
     }
 
-    private static List<List<Integer>> listVariationsWithOneRemoved(List<Integer> listOfNumbers ) {
+    private static List<List<Integer>> listVariationsWithOneRemoved(List<Integer> listOfNumbers) {
         final List<List<Integer>> variations = new ArrayList<>();
         for (int i = 0; i < listOfNumbers.size(); i++) {
             final List<Integer> list = new ArrayList<>(listOfNumbers);
             //noinspection RedundantCast
-            list.remove( (int) i);
+            list.remove((int) i);
             variations.add(list);
         }
         return variations;
