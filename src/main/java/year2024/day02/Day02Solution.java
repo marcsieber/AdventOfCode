@@ -2,6 +2,7 @@ package year2024.day02;
 
 import common.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,19 +16,40 @@ public class Day02Solution {
     public static void main(String[] args) {
 
         final List<String> input = Utils.readInputFromResources(inputFile);
-        final List<List<Integer>> levels = input.stream()
+        final List<List<Integer>> reports = input.stream()
                 .map(Utils::readAsListOfInt)
                 .toList();
 
-        final long countValid = countValidLevels(levels);
+        final long countValid = countValid(reports);
         System.out.println(countValid);
+
+        final long countValidWithDampener = countValidWithDampener(reports);
+        System.out.println(countValidWithDampener);
     }
 
-    private static long countValidLevels(List<List<Integer>> levels) {
-        return levels.stream()
+    private static long countValid(List<List<Integer>> reports) {
+        return reports.stream()
                 .filter(Day02Solution::isStrictlyMonotone)
                 .filter(Day02Solution::isValidDelta)
                 .count();
+    }
+
+    private static long countValidWithDampener(List<List<Integer>> reports) {
+        int counter = 0;
+        for (List<Integer> report : reports) {
+            if (isStrictlyMonotone(report) && isValidDelta(report)) {
+                counter++;
+
+            } else {
+                for (List<Integer> subReport : listVariationsWithOneRemoved(report)) {
+                    if ( isStrictlyMonotone(subReport) && isValidDelta(subReport)) {
+                        counter++;
+                        break;
+                    }
+                }
+            }
+        }
+        return counter;
     }
 
     private static boolean isStrictlyMonotone(List<Integer> listOfNumbers) {
@@ -54,4 +76,14 @@ public class Day02Solution {
         return true;
     }
 
+    private static List<List<Integer>> listVariationsWithOneRemoved(List<Integer> listOfNumbers ) {
+        final List<List<Integer>> variations = new ArrayList<>();
+        for (int i = 0; i < listOfNumbers.size(); i++) {
+            final List<Integer> list = new ArrayList<>(listOfNumbers);
+            //noinspection RedundantCast
+            list.remove( (int) i);
+            variations.add(list);
+        }
+        return variations;
+    }
 }
