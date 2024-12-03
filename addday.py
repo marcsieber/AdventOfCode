@@ -22,7 +22,7 @@ def create_adventofcode_structure(day: int):
 
     # Java class content
     java_class_content = f"""\
-package year2024.day{day_str};
+package year{year}.day{day_str};
 
 import common.Utils;
 
@@ -32,13 +32,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @see <a href="http://adventofcode.com/2024/day/{day}">Day {day_str}</a>
+ * @see <a href="http://adventofcode.com/{year}/day/{day}">Day {day_str}</a>
  */
 public class Day{day_str}Solution {{
 
     @SuppressWarnings("CommentedOutCode")
-    private static final String inputFile = "year2024/provided/day{day_str}-example.txt";
-    //private static final String inputFile = "year2024/provided/day{day_str}.txt";
+    private static final String inputFile = "year{year}/provided/day{day_str}-example.txt";
+    //private static final String inputFile = "year{year}/provided/day{day_str}.txt";
 
     public static void main(String[] args) {{
 
