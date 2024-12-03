@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @see <a href="http://adventofcode.com/2024/day/">Day 02</a>
+ * @see <a href="http://adventofcode.com/2024/day/2">Day 02</a>
  */
 public class Day02Solution {
 
