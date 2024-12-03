@@ -4,9 +4,9 @@
 import os
 import sys
 
-year = str(2024)
+default_year = str(2024)
 
-def create_adventofcode_structure(day: int):
+def create_adventofcode_structure(day: int, year: int):
     # Format day with leading zero if less than 10
     day_str = f"{day:02d}"
 
@@ -28,17 +28,14 @@ import common.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @see <a href="http://adventofcode.com/{year}/day/{day}">Day {day_str}</a>
  */
 public class Day{day_str}Solution {{
 
-    @SuppressWarnings("CommentedOutCode")
-    private static final String inputFile = "year{year}/provided/day{day_str}-example.txt";
-    //private static final String inputFile = "year{year}/provided/day{day_str}.txt";
+    private static final String inputFile = "{year}/provided/day{day_str}-example.txt";
+    //private static final String inputFile = "{year}/provided/day{day_str}.txt";
 
     public static void main(String[] args) {{
 
@@ -75,13 +72,14 @@ public class Day{day_str}Solution {{
 
 if __name__ == "__main__":
     # Ensure day argument is provided
-    if len(sys.argv) != 2:
-        print("Usage: python create_structure.py <day>")
+    if len(sys.argv) != 2 and len(sys.argv) != 3:
+        print("Usage: python addday.py <day> <year> (optional)")
         sys.exit(1)
 
     # Validate day argument
     try:
         day = int(sys.argv[1])
+        year = default_year if len(sys.argv) == 2 else sys.argv[2]
         if day < 1 or day > 25:
             raise ValueError("Day must be between 1 and 25.")
     except ValueError as e:
@@ -89,4 +87,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Create the structure
-    create_adventofcode_structure(day)
+    create_adventofcode_structure(day, year)

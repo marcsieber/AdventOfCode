@@ -5,18 +5,29 @@
 # Shell script to wrap and call the Python script, later download the official input samples.
 
 # Assign arguments to variables
+# Default year if not provided as an argument
+DEFAULT_YEAR="2024"
+
+# Check if a year is provided as the first argument
+if [[ -n "$2" ]]; then
+    YEAR="$2"
+else
+    YEAR="$DEFAULT_YEAR"
+fi
 DAY=$1
 DAY_PADDED=$(printf "%02d" $DAY)
 
 # Define the URL and cookie file
-URL="https://adventofcode.com/2024/day/$DAY/input"
+URL="https://adventofcode.com/$YEAR/day/$DAY/input"
 COOKIE_FILE="session-cookie.txt"
-OUTPUT_FILE="src/main/resources/2024/provided/day$DAY_PADDED.txt"
+OUTPUT_FILE="src/main/resources/$YEAR/provided/day$DAY_PADDED.txt"
 
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 1 ]; then
-    echo "Usage: ./adddday <day>"
+  if [ "$#" -ne 2 ]; then
+    echo "Usage: ./adddday <day> <year> (optional)"
     exit 1
+  fi
 fi
 
 # Check if the cookie file exists
@@ -26,7 +37,7 @@ if [[ ! -f "$COOKIE_FILE" ]]; then
 fi
 
 # Call the Python script with the provided arguments
-python3 addday.py "$DAY"
+python3 addday.py "$DAY" "$YEAR"
 
 # Check the exit status of the Python script
 if [ $? -eq 0 ]; then
