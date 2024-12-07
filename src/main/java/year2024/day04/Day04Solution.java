@@ -40,8 +40,8 @@ public class Day04Solution {
                 final List<Direction> directions = findNextDirections('M', startingPos, array2d);
                 for (Direction direction : directions) {
                     Point next = direction.add(startingPos);
-                    if (isWithinBounds(array2d, (next = direction.add(next))) && array2d[next.y][next.x] == 'A' &&
-                        isWithinBounds(array2d, (next = direction.add(next))) && array2d[next.y][next.x] == 'S') {
+                    if (Utils.isWithinBounds(array2d, (next = direction.add(next))) && array2d[next.y][next.x] == 'A' &&
+                        Utils.isWithinBounds(array2d, (next = direction.add(next))) && array2d[next.y][next.x] == 'S') {
                         count++;
                     }
                 }
@@ -71,14 +71,14 @@ public class Day04Solution {
 
     private static boolean isDiagonalMas(char[][] array2d, Point left, Point right) {
         return
-            (isWithinBounds(array2d, (right)) && isWithinBounds(array2d, (left)) && array2d[right.y][right.x] == 'M' && array2d[left.y][left.x] == 'S') ||
-            (isWithinBounds(array2d, (right)) && isWithinBounds(array2d, (left)) && array2d[right.y][right.x] == 'S' && array2d[left.y][left.x] == 'M');
+            (Utils.isWithinBounds(array2d, (right)) && Utils.isWithinBounds(array2d, (left)) && array2d[right.y][right.x] == 'M' && array2d[left.y][left.x] == 'S') ||
+            (Utils.isWithinBounds(array2d, (right)) && Utils.isWithinBounds(array2d, (left)) && array2d[right.y][right.x] == 'S' && array2d[left.y][left.x] == 'M');
     }
 
     @SuppressWarnings("SameParameterValue")
     private static List<Direction> findNextDirections( char next, Point currentPos, char[][] array2d) {
         return Arrays.stream(Direction.values())
-                .filter(d -> isWithinBounds(array2d, d.add(currentPos)))
+                .filter(d -> Utils.isWithinBounds(array2d, d.add(currentPos)))
                 .filter(d -> {
                     final Point p = d.add(currentPos);
                     return array2d[p.y][p.x] == next;
@@ -86,11 +86,6 @@ public class Day04Solution {
                 .collect(Collectors.toList());
     }
 
-    private static boolean isWithinBounds(char[][] array2d, Point position) {
-        final int x = position.x;
-        final int y = position.y;
-        return 0 <= y && 0 <= x && y < array2d.length && x < array2d[y].length;
-    }
 
     private enum Direction {
         NORTH_WEST(new Point(-1, -1)),
