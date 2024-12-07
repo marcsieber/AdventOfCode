@@ -42,6 +42,9 @@ public class Day{day_str}Solution {{
         final List<String> input = Utils.readInputFromResources(inputFile);
 
     }}
+    
+    // Utilities
+    // ------------------------------------------------------------------------
 
 }}
 """
