@@ -41,30 +41,21 @@ public class Day08Solution {
                 for (Point p2 : antennas) {
                     if (! p1.equals(p2)) {
                         final Point vecP1P2 = positionVector(p1, p2);
-
-                        boolean loop             = true;
-                        Point   antinodeLocation = addVector(p2, vecP1P2);
+                        //@formatter:off
+                        boolean loop = true;
+                        Point   antinodeLocation = addVector(resonance ? p1 : p2, vecP1P2); // in resonance mode we start on p1.
                         while (loop) {
                             if (! resonance) { loop = false; }
                             if (Utils.isWithinBounds(array2d, antinodeLocation)) {
                                 antinodeLocations[antinodeLocation.y][antinodeLocation.x] = ANTINODE;
-
                                 antinodeLocation = addVector(antinodeLocation, vecP1P2);
 
-                            } else {
-                                loop = false;
-                            }
+                            } else { loop = false; }
                         }
+                        //@formatter:off
                     }
                 }
             }
-        }
-
-        if (resonance) { // in case of resonance, we have to count also all stations of frequencies with more than 1 station
-            antennaLocations.values().stream()
-                    .filter(lst -> lst.size() > 1)
-                    .flatMap(List::stream)
-                    .forEach(p -> antinodeLocations[p.y][p.x] = ANTINODE);
         }
 
         return (int) uniqueCharsInArray2d(antinodeLocations).get(ANTINODE).stream()

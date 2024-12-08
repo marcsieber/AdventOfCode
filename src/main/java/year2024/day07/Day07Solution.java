@@ -68,7 +68,6 @@ public class Day07Solution {
     }
 
     private static <T> List<T> subList(List<T> list) {
-        if (list.size() == 1) { return new ArrayList<>(); }
         return list.subList(1, list.size());
     }
 
@@ -90,6 +89,5 @@ public class Day07Solution {
 
         private Long apply(Long a, Long b) { return apply.apply(a, b); }
     }
-
 
 }
