@@ -74,6 +74,9 @@ public class Utils {
                 .toList();
     }
 
+    // Array grid operations
+    // -----------------------------------
+
     public static char[][] as2dArray(List<String> input) {
         if (input.isEmpty()) { return new char[0][0]; }
 
@@ -126,7 +129,6 @@ public class Utils {
         return copy;
     }
 
-
     public static void replaceCharacters(char [][] array2d, List<Point> coordinates, char newChar) {
         for (Point coords : coordinates) {
             array2d[coords.y][coords.x] = newChar;
@@ -138,6 +140,17 @@ public class Utils {
         for (char[] chars : array2d) {
             System.out.println(new String(chars));
         }
+    }
+
+    // Maths
+    // -----------------------------------
+
+    public static Point positionVector(Point a, Point b) {
+        return new Point((b.x - a.x), (b.y - a.y));
+    }
+
+    public static Point addVector(Point a, Point vec) {
+        return new Point((a.x + vec.x), (a.y + vec.y));
     }
 
 }

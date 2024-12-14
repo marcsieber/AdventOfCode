@@ -40,15 +40,15 @@ public class Day08Solution {
             for (Point p1 : antennas) {
                 for (Point p2 : antennas) {
                     if (! p1.equals(p2)) {
-                        final Point vecP1P2 = positionVector(p1, p2);
+                        final Point vecP1P2 = Utils.positionVector(p1, p2);
                         //@formatter:off
                         boolean loop = true;
-                        Point   antinodeLocation = addVector(resonance ? p1 : p2, vecP1P2); // in resonance mode we start on p1.
+                        Point   antinodeLocation = Utils.addVector(resonance ? p1 : p2, vecP1P2); // in resonance mode we start on p1.
                         while (loop) {
                             if (! resonance) { loop = false; }
                             if (Utils.isWithinBounds(array2d, antinodeLocation)) {
                                 antinodeLocations[antinodeLocation.y][antinodeLocation.x] = ANTINODE;
-                                antinodeLocation = addVector(antinodeLocation, vecP1P2);
+                                antinodeLocation = Utils.addVector(antinodeLocation, vecP1P2);
 
                             } else { loop = false; }
                         }
@@ -61,14 +61,6 @@ public class Day08Solution {
         return (int) uniqueCharsInArray2d(antinodeLocations).get(ANTINODE).stream()
                 .distinct()
                 .count();
-    }
-
-    private static Point positionVector(Point a, Point b) {
-        return new Point((b.x - a.x), (b.y - a.y));
-    }
-
-    private static Point addVector(Point a, Point vec) {
-        return new Point((a.x + vec.x), (a.y + vec.y));
     }
 
     // Utilities
