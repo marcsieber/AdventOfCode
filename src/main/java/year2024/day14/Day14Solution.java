@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  */
 public class Day14Solution {
 
+    @SuppressWarnings("CommentedOutCode")
     //private static final String inputFile = "2024/provided/day14-example.txt";
     //private static final int    WIDTH     = 11;
     //private static final int    HEIGHT    = 7;
@@ -27,6 +28,9 @@ public class Day14Solution {
 
         final int safetyScore = safetyScore(simulateMovements(100, initialRobots));
         System.out.println(safetyScore);
+
+        final int firstTree = findTree(initialRobots);
+        System.out.println(firstTree);
     }
 
     private static List<Robot> simulateMovements(int seconds, List<Robot> robots) {
@@ -35,6 +39,15 @@ public class Day14Solution {
                 .map(Day14Solution::moveRobot)
                 .toList()
         );
+    }
+
+    private static int findTree(List<Robot> robots) {
+        int counter = 0;
+        while (! formsTree(robots, 9)) {
+            robots = simulateMovements(1, robots);
+            counter++;
+        }
+        return counter;
     }
 
     private static Robot moveRobot(Robot robot) {
@@ -70,6 +83,32 @@ public class Day14Solution {
                 .count();
     }
 
+    @SuppressWarnings("SameParameterValue")
+    private static boolean formsTree(List<Robot> robots, int branchLength) {
+        final char[][] array2d = new char[HEIGHT][WIDTH];
+        for (Robot robot : robots) {
+            array2d[robot.p.y][robot.p.x] = '.';
+        }
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                start:
+                for (int i = 0; i <= branchLength; i++) {
+                    for (int j = 0; j <= branchLength; j++) {
+                        if (Utils.isWithinBounds(array2d, new Point(x - i, y + j))) {
+                            if (array2d[y + j][x - i] != '.') {
+                                break start;
+                            } else if (i == branchLength) {
+                                Utils.print2dArray(array2d);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     // Utilities
     // ------------------------------------------------------------------------
 
@@ -87,19 +126,4 @@ public class Day14Solution {
                 }).toList();
     }
 
-
-    @SuppressWarnings("unused")
-    private static void printRobots(List<Robot> robots) {
-        final char[][] array2d = new char[HEIGHT][WIDTH];
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
-                array2d[i][j] = '0';
-            }
-        }
-        for (Robot robot : robots) {
-            array2d[robot.p.y][robot.p.x]++;
-        }
-        Utils.print2dArray(array2d);
-        System.out.println("---------------------------");
-    }
 }
