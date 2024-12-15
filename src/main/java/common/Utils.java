@@ -5,10 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Utils {
 
@@ -133,6 +130,16 @@ public class Utils {
         for (Point coords : coordinates) {
             array2d[coords.y][coords.x] = newChar;
         }
+    }
+
+    public static Map<Character, List<Point>> uniqueCharsInArray2d(char[][] array2d) {
+        final Map<Character, List<Point>> map = new HashMap<>();
+        for (int y = 0; y < array2d.length; y++) {
+            for (int x = 0; x < array2d[y].length; x++) {
+                map.computeIfAbsent(array2d[y][x], _ -> new ArrayList<>()).add(new Point(x, y));
+            }
+        }
+        return map;
     }
 
     @SuppressWarnings("unused")

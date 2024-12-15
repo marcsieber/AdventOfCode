@@ -3,8 +3,6 @@ package year2024.day08;
 import common.Utils;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public class Day08Solution {
         final List<String> input   = Utils.readInputFromResources(inputFile);
         final char[][]     array2d = Utils.as2dArray(input);
 
-        final Map<Character, List<Point>> antennaLocations = uniqueCharsInArray2d(array2d); // contains unwanted points
+        final Map<Character, List<Point>> antennaLocations = Utils.uniqueCharsInArray2d(array2d); // contains unwanted points
         antennaLocations.remove(EMPTY_LOCATION);
 
         final int countAmountUniqueAntinodeLocations = uniqueAntinodeLocations(array2d, antennaLocations, false);
@@ -58,21 +56,9 @@ public class Day08Solution {
             }
         }
 
-        return (int) uniqueCharsInArray2d(antinodeLocations).get(ANTINODE).stream()
+        return (int) Utils.uniqueCharsInArray2d(antinodeLocations).get(ANTINODE).stream()
                 .distinct()
                 .count();
     }
 
-    // Utilities
-    // ------------------------------------------------------------------------
-
-    private static Map<Character, List<Point>> uniqueCharsInArray2d(char[][] array2d) {
-        final Map<Character, List<Point>> map = new HashMap<>();
-        for (int y = 0; y < array2d.length; y++) {
-            for (int x = 0; x < array2d[y].length; x++) {
-                map.computeIfAbsent(array2d[y][x], _ -> new ArrayList<>()).add(new Point(x, y));
-            }
-        }
-        return map;
-    }
 }
