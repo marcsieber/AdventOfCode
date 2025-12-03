@@ -11,14 +11,15 @@ import java.util.stream.Collectors;
  */
 public class Day15Solution {
 
-    private static final String inputFile = "2024/provided/day15-example.txt";
+    //private static final String inputFile = "2024/provided/day15-example.txt";
+    private static final String inputFile = "2024/provided/day15-example2.txt";
     //private static final String inputFile = "2024/provided/day15.txt";
 
-    public static final char WALL  = '#';
-    public static final char BOX   = 'O';
-    public static final char EMPTY = '.';
-    public static final char ROBOT = '@';
-    public static final char BOX_LEFT = '[';
+    public static final char WALL      = '#';
+    public static final char BOX       = 'O';
+    public static final char EMPTY     = '.';
+    public static final char ROBOT     = '@';
+    public static final char BOX_LEFT  = '[';
     public static final char BOX_RIGHT = ']';
 
     public static void main(String[] args) {
@@ -29,8 +30,11 @@ public class Day15Solution {
         final char[]   robotMovements = readRobotMovements(input);
 
         final Point robotStartingPos = Utils.uniqueCharsInArray2d(smallWarehouse).get(ROBOT).getFirst();
-        final int   gpsSum           = sumGPSCoordinatesAfterRobotMoving(robotStartingPos, robotMovements, smallWarehouse);
+
+        final int gpsSum = sumGPSCoordinatesAfterRobotMoving(robotStartingPos, robotMovements, smallWarehouse);
         System.out.println(gpsSum);
+
+        final char[][] bigWarehouse = scaleWarehouse(smallWarehouse);
     }
 
     private static int sumGPSCoordinatesAfterRobotMoving(Point robotPosition, char[] movements, char[][] warehouse) {
@@ -45,14 +49,14 @@ public class Day15Solution {
     private static void simulateRobotMovements(Point robotPosition, char[] movements, char[][] warehouse) {
         for (char movement : movements) {
             final Direction direction = Direction.of(movement);
-            robotPosition = move(robotPosition, direction, warehouse);
+            robotPosition = moveSmallBox(robotPosition, direction, warehouse);
         }
     }
 
     /**
      * Moves the robot one step into the given direction
      */
-    private static Point move(Point robotPosition, Direction direction, char[][] warehouse) {
+    private static Point moveSmallBox(Point robotPosition, Direction direction, char[][] warehouse) {
         Point nextPosition = robotPosition;
         char  nextObject;
         //noinspection StatementWithEmptyBody
@@ -68,10 +72,43 @@ public class Day15Solution {
         warehouse[nextRobotPosition.y][nextRobotPosition.x] = ROBOT;
         warehouse[robotPosition.y][robotPosition.x]         = EMPTY;
 
-        if (! nextPosition.equals(nextRobotPosition)) { // test if we haven't moved no an empty field.
+        if (! nextPosition.equals(nextRobotPosition)) { // test if we haven't moved on an empty field.
             warehouse[nextPosition.y][nextPosition.x] = BOX;
         }
         return nextRobotPosition;
+    }
+
+//    private static Point moveLargeBox(Point robotPosition, Direction direction, char[][] warehouse) {
+//        if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+//            Point movementStopsAt = robotPosition;
+//            //noinspection StatementWithEmptyBody
+//            while (isLargeBox(
+//                    movementStopsAt = Utils.addVector(movementStopsAt, direction.getDirectionVec()),
+//                    warehouse
+//            )) { } // loop until a wall or empty space is found
+//            if (charAt(movementStopsAt, warehouse) == WALL) { // the next none box position is a wall we cannot move
+//                return robotPosition;
+//            }
+//
+//            Point nextPosition  = robotPosition;
+//            char  currentObject = charAt(nextPosition, warehouse);
+//            while (! nextPosition.equals(movementStopsAt)) {
+//                nextPosition = Utils.addVector(nextPosition, direction.getDirectionVec());
+//                final char nextObject = charAt(nextPosition, warehouse);
+//                warehouse[nextPosition.y][nextPosition.x] = currentObject;
+//                                                            currentObject = nextObject;
+//            }
+//            warehouse[robotPosition.y][robotPosition.x] = EMPTY;
+//            return Utils.addVector(robotPosition, direction.getDirectionVec()); ;
+//
+//        } else {
+//
+//        }
+//    }
+
+    private static boolean isLargeBox(Point position, char[][] warehouse) {
+        final char c = charAt(position, warehouse);
+        return c == BOX_LEFT || c == BOX_RIGHT;
     }
 
     private static int gpsCoordinate(Point position) {
@@ -84,6 +121,32 @@ public class Day15Solution {
         return Utils.as2dArray(input.stream()
                 .takeWhile(s -> s.startsWith("#"))
                 .toList());
+    }
+
+    private static char[][] scaleWarehouse(char[][] warehouse) {
+        final char[][] newWarehouse = new char[warehouse.length][warehouse[0].length * 2];
+        for (int y = 0; y < warehouse.length; y++) {
+            for (int x = 0; x < warehouse[0].length; x++) {
+                final char obj = warehouse[y][x];
+                // @formatter:off
+                if (obj == WALL) {
+                    newWarehouse[y][x*2]   = WALL;
+                    newWarehouse[y][x*2+1] = WALL;
+                } else if (obj == BOX) {
+                    newWarehouse[y][x*2]   = BOX_LEFT;
+                    newWarehouse[y][x*2+1] = BOX_RIGHT;
+                } else if (obj == EMPTY) {
+                    newWarehouse[y][x*2]   = EMPTY;
+                    newWarehouse[y][x*2+1] = EMPTY;
+                } else if (obj == ROBOT) {
+                    newWarehouse[y][x*2]   = ROBOT;
+                    newWarehouse[y][x*2+1] = EMPTY;
+                }
+                // @formatter:on
+            }
+        }
+        Utils.print2dArray(newWarehouse);
+        return newWarehouse;
     }
 
     private static char[] readRobotMovements(List<String> input) {
