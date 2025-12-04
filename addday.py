@@ -26,7 +26,6 @@ package year{year}.day{day_str};
 
 import common.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class Day{day_str}Solution {{
     private static final String inputFile = "{year}/provided/day{day_str}-example.txt";
     //private static final String inputFile = "{year}/provided/day{day_str}.txt";
 
-    public static void main(String[] args) {{
+    static void main() {{
 
         final List<String> input = Utils.readInputFromResources(inputFile);
 
