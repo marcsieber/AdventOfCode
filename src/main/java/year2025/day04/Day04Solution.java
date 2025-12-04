@@ -2,6 +2,8 @@ package year2025.day04;
 
 import common.Utils;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +14,7 @@ public class Day04Solution {
 //    private static final String inputFile = "2025/provided/day04-example.txt";
     private static final String inputFile = "2025/provided/day04.txt";
 
+    public static final char EMPTY_SPACE              = '.';
     public static final char PAPER_ROLL               = '@';
     public static final int  MAX_ADJACENT_PAPER_ROLLS = 3;
 
@@ -22,25 +25,44 @@ public class Day04Solution {
         final char[][] map = Utils.as2dArray(input);
 
         System.out.println(countAccessibleRolls(map));
+        System.out.println(countAccessibleRollsWhenRemovingRemoved(map));
 
     }
 
     private static int countAccessibleRolls(char[][] map) {
+        return movableBoxes(map).size();
+    }
+
+    private static int countAccessibleRollsWhenRemovingRemoved(char[][] map) {
+        int totalAccessibleRolls = 0;
+
+        List<Point> accessibleRolls;
+        while(! (accessibleRolls = movableBoxes(map)).isEmpty()) {
+            for (Point point : accessibleRolls) {
+                map[point.y][point.x] = EMPTY_SPACE;
+            }
+            totalAccessibleRolls += accessibleRolls.size();
+        }
+        return totalAccessibleRolls;
+    }
+
+
+    private static List<Point> movableBoxes(char[][] map) {
         final int width  = map[0].length;
         final int height = map.length;
 
-        int accessibleRolls = 0;
+        final List<Point> movableBoxes = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (map[y][x] == PAPER_ROLL) {
                     final int surroundingRolls = countPaperRollsSurrounding(map, height, width, x, y);
                     if (surroundingRolls <= MAX_ADJACENT_PAPER_ROLLS) {
-                        accessibleRolls++;
+                        movableBoxes.add(new Point(x, y));
                     }
                 }
             }
         }
-        return accessibleRolls;
+        return movableBoxes;
     }
 
     private static int countPaperRollsSurrounding(char[][] map, int height, int width, int posX, int posY) {
