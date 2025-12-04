@@ -25,7 +25,7 @@ public class Day04Solution {
         final char[][] map = Utils.as2dArray(input);
 
         System.out.println(countAccessibleRolls(map));
-        System.out.println(countAccessibleRollsWhenRemovingRemoved(map));
+        System.out.println(countAccessibleRollsWhenRemovingRoles(map));
 
     }
 
@@ -33,7 +33,7 @@ public class Day04Solution {
         return movableBoxes(map).size();
     }
 
-    private static int countAccessibleRollsWhenRemovingRemoved(char[][] map) {
+    private static int countAccessibleRollsWhenRemovingRoles(char[][] map) {
         int totalAccessibleRolls = 0;
 
         List<Point> accessibleRolls;
