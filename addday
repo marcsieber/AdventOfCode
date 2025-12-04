@@ -6,7 +6,7 @@
 
 # Assign arguments to variables
 # Default year if not provided as an argument
-DEFAULT_YEAR="2024"
+DEFAULT_YEAR="2025"
 
 # Check if a year is provided as the first argument
 if [[ -n "$2" ]]; then
