@@ -16,12 +16,19 @@ public class Day03Solution {
 
         final List<String> input = Utils.readInputFromResources(inputFile);
 
-        final int sumMaxOutput = input.stream()
+        final long sumMaxOutput2Batteries = input.stream()
                 .map(BatteryBank::new)
-                .mapToInt(BatteryBank::getMaxOutput)
+                .mapToLong(bank -> bank.getMaxOutput(2))
                 .sum();
 
-        System.out.println( sumMaxOutput);
+        System.out.println(sumMaxOutput2Batteries);
+
+        final long sumMaxOutput12Batteries = input.stream()
+                .map(BatteryBank::new)
+                .mapToLong(bank -> bank.getMaxOutput(12))
+                .sum();
+
+        System.out.println(sumMaxOutput12Batteries);
     }
     
     // Utilities
@@ -29,12 +36,19 @@ public class Day03Solution {
 
     private record BatteryBank(String bank) {
 
-        int getMaxOutput() {
-            final int idx1 = maxIdx(bank, 0, bank.length() -1);
-            final int idx2 = maxIdx(bank, idx1 + 1, bank.length());
+        long getMaxOutput(int numBatteries) {
+            final int [] indexes = new int[numBatteries];
+            for (int i = 0; i < numBatteries; i++) {
+                final int startIdx = i == 0 ? 0 : indexes[i - 1] + 1;
+                indexes[i] = maxIdx(bank, startIdx, bank.length() - numBatteries + i +1);
+            }
 
-            return (bank.charAt(idx1) - '0') * 10 +
-                   (bank.charAt(idx2) - '0');
+            long joltage = 0;
+            for (int i = 0; i < numBatteries; i++) {
+                final int valueAtIdx = bank.charAt(indexes[i]) - '0';
+                joltage += valueAtIdx * (long) Math.pow(10, numBatteries - i - 1);
+            }
+            return joltage;
         }
 
         private static int maxIdx(String s, int start, int end) {
