@@ -3,6 +3,7 @@ package year2025.day06;
 import common.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class Day06Solution {
 
         final long result1 = solve(numberField, mathOperations, infos, new HorizontalNumberReader());
         System.out.println(result1);
+
+        final long result2 = solve(numberField, mathOperations, infos, new VerticalNumberReader());
+        System.out.println(result2);
     }
 
 
@@ -61,19 +65,42 @@ public class Day06Solution {
         public List<Long> readValues(char[][] numberField, int columnIdx, List<NumberPositionInfo> numberPositions) {
             final List<Long> values = new ArrayList<>();
             for (final char[] yChars : numberField) {
-                final StringBuilder builder = new StringBuilder();
+                final StringBuilder numberBuilder = new StringBuilder();
                 final NumberPositionInfo info = numberPositions.get(columnIdx);
                 for (int i = info.offset(); i < info.offset() + info.length(); i++) {
                     final char currentChar = yChars[i];
                     if (currentChar != EMPTY) {
-                        builder.append(currentChar);
+                        numberBuilder.append(currentChar);
                     }
                 }
-                values.add(Long.valueOf(builder.toString()));
+                values.add(Long.valueOf(numberBuilder.toString()));
             }
             return values;
         }
     }
+
+    private static class VerticalNumberReader implements NumberReader {
+
+        @Override
+        public List<Long> readValues(char[][] numberField, int columnIdx, List<NumberPositionInfo> numberPositions) {
+            final List<Long> values = new ArrayList<>();
+            final NumberPositionInfo info = numberPositions.get(columnIdx);
+            for (int x = info.offset() + info.length -1; info.offset() <= x; x--) {
+                final StringBuilder numberBuilder = new StringBuilder();
+                for (final char[] yChars : numberField) {
+                    final char currentChar = yChars[x];
+                    if (currentChar != EMPTY) {
+                        numberBuilder.append(currentChar);
+                    }
+                }
+                values.add(Long.valueOf(numberBuilder.toString()));
+            }
+            Collections.reverse(values); // reverse otherwise the operators would get applied in the wrong order
+            return values;
+        }
+    }
+
+
 
     // Utilities
     // ------------------------------------------------------------------------
